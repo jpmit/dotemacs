@@ -44,9 +44,9 @@
 (defun wordc ()
   (interactive)
   (shell-command-on-region (point)
-									(mark)
-									(concat "texcount.pl -brief " (buffer-name))
-									nil nil))
+                           (mark)
+                           (concat "texcount.pl -brief " (buffer-name))
+                            nil nil))
 ;; spellcheck document as it is written
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
