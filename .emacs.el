@@ -1,4 +1,4 @@
-;; .emacs.el - emacs configuration file
+;; .emacs.el - my emacs configuration file
 ;; James Mithen
 ;; j.mithen@surrey.ac.uk
 
