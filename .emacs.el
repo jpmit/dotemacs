@@ -1,11 +1,16 @@
 ;; .emacs.el - my emacs configuration file
 ;; James Mithen
 ;; j.mithen@surrey.ac.uk
+;;
+;; This is a bit of a mess at the moment, but it gets the job done.
+
+;; use spaces rather than tabs everywhere
+(setq-default indent-tabs-mode nil)
 
 ;; DONT BEEP BUT FLASH WHEN REACH END OF BUFFER
 (setq visible-bell t)
 
-;; NICE FONT
+;; NICE FONT (OR IS IT?)
 (setq default-frame-alist '((font . "terminus")))
 (set-face-attribute 'default nil :height 120)
 
@@ -47,6 +52,7 @@
                            (mark)
                            (concat "texcount.pl -brief " (buffer-name))
                             nil nil))
+
 ;; spellcheck document as it is written
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
@@ -55,13 +61,22 @@
 
 ;;SET UP IPYTHON AS DEFAULT PYTHON INTERPRETER
 ;;THIS IS SLIGHTLY BLACK MAGIC DUE TO ipython.el
-(setq ipython-command "/usr/bin/ipython")
-(setq py-python-command-args '("--pylab"));; "-wthread"))
+;;(setq ipython-command "/usr/bin/ipython")
+;;(setq py-python-command-args '("--pylab"));; "-wthread"))
 (add-to-list 'load-path "/user/phstf/jm0037/.el")
-(require 'ipython)
-(require 'comint)
+;; we need the normal python mode el
+;;(require 'python-mode)
+;;(setq py-python-command "ipython")
+;;(require 'ipython)
+;;(require 'comint)
 ;; colors can be NoColor, LightBG or Linux
-(setq py-python-command-args '("--colors=LightBG"))
+;;(setq py-python-command-args '("--colors=LightBG" "--pylab"))
+;; tab completion (!!)
+;;(global-set-key [C-tab] 'ipython-complete)
+
+(require 'python-mode)
+(setq py-shell-name "ipython")
+(setq-default py-python-command-args '("--pylab" "--colors" "LightBG"))
 
 ;;STUFF FOR FORTRAN PROGRAMMING
 (add-hook 'f90-mode-hook
@@ -98,8 +113,8 @@
 
 ;; TRAMP - this allows you to ssh into localhost as root
 ;; and hence edit files as root in the same emacs session
-(require 'tramp)
-(setq tramp-default-method "scp")
+;; (require 'tramp)
+;; (setq tramp-default-method "scp")
 
 ;;HERE IS SOME STUFF FOR c PROGRAMMING
 (setq c-default-style "k&r")
@@ -133,63 +148,18 @@
 ;; set global font lock mode on
 (global-font-lock-mode t)
 
-;;(custom-set-variables
-  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
-  ;; Your init file should contain only one such instance.
-;; '(speedbar-frame-parameters (quote ((minibuffer) (width . 20) (border-width . 0) (menu-bar-lines . 0) (tool-bar-lines . 0) (unsplittable . t) (set-background-color "black")))))
-;;(custom-set-faces
-  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
-  ;; Your init file should contain only one such instance.
-;; '(background "blue")
-;; '(font-lock-builtin-face ((((class color) (background dark)) (:foreground "Turquoise"))))
-;; '(font-lock-comment-face ((t (:foreground "MediumAquamarine"))))
-;; '(font-lock-constant-face ((((class color) (background dark)) (:bold t :foreground "DarkOrchid"))))
-;; '(font-lock-doc-string-face ((t (:foreground "green2"))))
-;; '(font-lock-function-name-face ((t (:foreground "SkyBlue"))))
-;; '(font-lock-keyword-face ((t (:bold t :foreground "CornflowerBlue"))))
-;; '(font-lock-preprocessor-face ((t (:italic nil :foreground "CornFlowerBlue"))))
-;; '(font-lock-reference-face ((t (:foreground "DodgerBlue"))))
-;; '(font-lock-string-face ((t (:foreground "LimeGreen"))))
-;; '(font-lock-type-face ((t (:foreground "#9290ff"))))
-;; '(font-lock-variable-name-face ((t (:foreground "PaleGreen"))))
-;; '(font-lock-warning-face ((((class color) (background dark)) (:foreground "yellow" :background "red"))))
-;; '(highlight ((t (:background "CornflowerBlue"))))
-;; '(list-mode-item-selected ((t (:background "gold"))))
-;; '(makefile-space-face ((t (:background "wheat"))))
-;; '(mode-line ((t (:background "Navy" :foreground "white" :box (:line-width -1 :style released-button)))))
-;; '(modeline ((t (:background "Navy"))))
-;; '(paren-match ((t (:background "darkseagreen4"))))
-;; '(region ((t (:background "DarkSlateBlue"))))
-;; '(show-paren-match-face ((t (:foreground "black" :background "wheat"))))
-;; '(show-paren-mismatch-face ((((class color)) (:foreground "white" :background "red"))))
-;; '(speedbar-button-face ((((class color) (background dark)) (:foreground "green4"))))
-;; '(speedbar-directory-face ((((class color) (background dark)) (:foreground "khaki"))))
-;; '(speedbar-file-face ((((class color) (background dark)) (:foreground "cyan"))))
-;; '(speedbar-tag-face ((((class color) (background dark)) (:foreground "Springgreen"))))
-;; '(vhdl-speedbar-architecture-selected-face ((((class color) (background dark)) (:underline t :foreground "Blue"))))
-;; '(vhdl-speedbar-entity-face ((((class color) (background dark)) (:foreground "darkGreen"))))
-;; '(vhdl-speedbar-entity-selected-face ((((class color) (background dark)) (:underline t :foreground "darkGreen"))))
-;; '(vhdl-speedbar-package-face ((((class color) (background dark)) (:foreground "black"))))
-;; '(vhdl-speedbar-package-selected-face ((((class color) (background dark)) (:underline t :foreground "black"))))
-;; '(widget-field-face ((((class grayscale color) (background light)) (:background "DarkBlue")))))
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- ;;'(TeX-output-view-style (quote (("^pdf$" "." "evince %o") ("^ps$" "." "gv %o") ("^dvi$" "." "evince %o"))))
  '(column-number-mode t)
  '(preview-image-type (quote dvipng))
+ '(py-shell-name "ipython")
  '(tab-width 3))
-;;(custom-set-faces
+(custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-;; '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 98 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
-;;(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-;; '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "bitstream" :family "Bitstream Vera Sans Mono")))))
+)
