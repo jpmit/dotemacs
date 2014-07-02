@@ -1,6 +1,11 @@
 ;; .emacs.el - my emacs configuration file
 ;; James Mithen
 ;; j.mithen@surrey.ac.uk
+;;
+;; This is a bit of a mess at the moment, but it gets the job done.
+
+;; use spaces rather than tabs everywhere
+(setq-default indent-tabs-mode nil)
 
 ;; any other elisp is found here
 (add-to-list 'load-path "~/el")
@@ -60,12 +65,15 @@
 ;; enable cut and paste in x 
 (setq x-select-enable-clipboard t)
 
+;; line numbering
+(require 'linum)
+
 ;; set up ipython as default python interpreter this is slightly black
 ;; magic.  It shouldn't be needed in more recent emacs versions (>23?)
 (require 'python-mode)
 (require 'ipython)
 (require 'comint)
-(require 'linum)
+
 ;; colors for ipython can be NoColor, LightBG or Linux
 (setq py-python-command-args '("--pylab" "--colors" "LightBG"))
 
@@ -85,8 +93,8 @@
 
 ;; tramp - this allows you to ssh into localhost as root
 ;; and hence edit files as root in the same emacs session
-(require 'tramp)
-(setq tramp-default-method "scp")
+;; (require 'tramp)
+;; (setq tramp-default-method "scp")
 
 ;; no tabs
 (setq-default indent-tabs-mode nil)
@@ -98,3 +106,48 @@
 (setq tab-width 3)
 (setq c-basic-offset 3)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+<<<<<<< HEAD
+=======
+
+;;(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+;;(setq interpreter-mode-alist (cons '("ipython" . python-mode) interpreter-mode-alist))
+;;(autoload 'python-mode "python-mode" "Python editing mode." t)
+
+;;(add-hook 'python-mode-hook (global-set-key [up] 'previous-history-element)) 
+;;(add-hook 'python-mode-hook (global-set-key [down] 'next-history-element))
+
+;; APPEARANCE SETTINGS
+;;(load "xf")
+;;(xf-load-fonts)
+;;(set-background-color "Black")
+;;(set-foreground-color "Wheat")
+;;(set-cursor-color "Orchid")
+;;(setq initial-frame-alist '((width . 87) (height . 62)))
+;;(set-frame-font "10x20")
+      (setq default-frame-alist 
+	    '((width   . 87)
+	      (height  . 62)
+	      (foreground-color . "Black") ;; Was "Wheat"
+	      (background-color . "White") ;; Was "Black"
+	      (cursor-color     . "Navy"))) ;; Was "Orchid"
+;;the next line doesnt actually work at the moment
+;;(set-default-font "-adobe-courier-medium-r-normal--18-180-75-75-m-110-iso8859-1")
+;; set global font lock mode on
+(global-font-lock-mode t)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(preview-image-type (quote dvipng))
+ '(py-shell-name "ipython")
+ '(tab-width 3))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+)
+>>>>>>> 1abb5b1909a885e6be7df5477adb9e479fef8ae6
