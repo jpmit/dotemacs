@@ -115,3 +115,6 @@
 (setq tab-width 3)
 (setq c-basic-offset 3)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+
+;; for working on mutiny (for now)
+(setq c-default-style "linux" c-basic-offset 2)
