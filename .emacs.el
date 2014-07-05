@@ -63,7 +63,7 @@
 ;;THIS IS SLIGHTLY BLACK MAGIC DUE TO ipython.el
 ;;(setq ipython-command "/usr/bin/ipython")
 ;;(setq py-python-command-args '("--pylab"));; "-wthread"))
-(add-to-list 'load-path "/user/phstf/jm0037/.el")
+(add-to-list 'load-path "~/.el")
 ;; we need the normal python mode el
 ;;(require 'python-mode)
 ;;(setq py-python-command "ipython")
@@ -73,10 +73,21 @@
 ;;(setq py-python-command-args '("--colors=LightBG" "--pylab"))
 ;; tab completion (!!)
 ;;(global-set-key [C-tab] 'ipython-complete)
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args ""
+ python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+ python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+ python-shell-completion-setup-code
+   "from IPython.core.completerlib import module_completion"
+ python-shell-completion-module-string-code
+   "';'.join(module_completion('''%s'''))\n"
+ python-shell-completion-string-code
+   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
-(require 'python-mode)
-(setq py-shell-name "ipython")
-(setq-default py-python-command-args '("--pylab" "--colors" "LightBG"))
+;;(require 'python-mode)
+;;(setq py-shell-name "ipython")
+;;(setq-default py-python-command-args '("--pylab" "--colors" "LightBG"))
 
 ;;STUFF FOR FORTRAN PROGRAMMING
 (add-hook 'f90-mode-hook
@@ -103,7 +114,7 @@
 (global-set-key "\C-x\C-j" 'james-line-comment)
 
 ;;THIS IS A FONTS .el file I found
-(require 'font-menus)
+;;(require 'font-menus)
 
 ;; REMOVE THE BIG CHUNKY BUTTONS FROM GUI
 (tool-bar-mode -1)
