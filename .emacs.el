@@ -14,7 +14,7 @@
 (setq visible-bell t)
 
 ;; nice font
-(setq default-frame-alist '((font . "terminus")))
+;;(setq default-frame-alist '((font . "terminus")))
 (set-face-attribute 'default nil :height 120)
 
 ;; syntax highlighting
@@ -59,13 +59,15 @@
                            (concat "texcount.pl -brief " (buffer-name))
                             nil nil))
 
+;; theme: currently either 'professional' (light color) or or 'jazz' (dark color, emacs24 only apparently)
+(load-file "~/el/jazz-theme.el")
+(load-theme 'jazz t)
+
 ;; spellcheck document as it is written
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 ;; enable cut and paste in x 
 (setq x-select-enable-clipboard t)
-
-(add-to-list 'load-path "~/.el")
 
 ;; ipython
 (setq
@@ -83,6 +85,28 @@
 ;; line numbering
 (require 'linum)
 
+;; coffee script
+(require 'coffee-mode)
+
+;; haxe
+(require 'haxe-mode)
+(defconst my-haxe-style
+   '("java" (c-offsets-alist . ((case-label . +)
+                                (arglist-intro . +)
+                                (arglist-cont-nonempty . 0)
+                                (arglist-close . 0)
+                                (cpp-macro . 0))))
+   "My Haxe Programming Style")
+ (add-hook 'haxe-mode-hook
+   (function (lambda () (c-add-style "haxe" my-haxe-style t))))
+ (add-hook 'haxe-mode-hook
+           (function
+            (lambda ()
+              (setq tab-width 4)
+              (setq indent-tabs-mode t)
+              (setq fill-column 80)
+              (local-set-key [(return)] 'newline-and-indent))))
+
 ;; colors for ipython can be NoColor, LightBG or Linux
 (setq py-python-command-args '("--pylab" "--colors" "LightBG"))
 
@@ -92,7 +116,7 @@
 (setq auto-mode-alist (cons '(".F90$" . f90-mode) auto-mode-alist))
 
 ;; this is a fonts .el file I found
-(require 'font-menus)
+;;(require 'font-menus)
 
 ;; remove the big chunky buttons from gui
 (tool-bar-mode -1)
@@ -105,9 +129,6 @@
 ;; (require 'tramp)
 ;; (setq tramp-default-method "scp")
 
-;; no tabs
-(setq-default indent-tabs-mode nil)
-
 ;; here is some stuff for c programming
 (setq c-default-style "k&r")
 (require 'cc-mode)
@@ -118,3 +139,22 @@
 
 ;; for working on mutiny (for now)
 (setq c-default-style "linux" c-basic-offset 2)
+
+;; longer than default line length of 70 when use M-q
+(setq fill-column 80)
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
